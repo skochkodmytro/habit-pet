@@ -31,7 +31,7 @@ const Button = ({
       disabled={disabled || loading}
       {...rest}
     >
-      {loading && <ActivityIndicator color="#fff" />}
+      {loading ? <ActivityIndicator color="#fff" /> : null}
       <Text style={[styles.text, disabled && styles.textDisabled, textStyle]}>
         {children}
       </Text>
