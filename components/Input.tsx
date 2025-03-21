@@ -1,10 +1,6 @@
-import {
-  TextInput,
-  TextInputProps,
-  StyleSheet,
-  View,
-  Text,
-} from 'react-native';
+import { TextInput, TextInputProps, StyleSheet, View } from 'react-native';
+
+import { ThemedText } from './ThemedText';
 
 type InputProps = TextInputProps & {
   label?: string;
@@ -21,7 +17,7 @@ const Input = ({
 }: InputProps) => {
   return (
     <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label ? <ThemedText style={styles.label}>{label}</ThemedText> : null}
       <TextInput
         style={[
           styles.input,
@@ -34,7 +30,9 @@ const Input = ({
         placeholderTextColor="#A9A9A9"
         {...props}
       />
-      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
+      {errorMessage ? (
+        <ThemedText style={styles.errorText}>{errorMessage}</ThemedText>
+      ) : null}
     </View>
   );
 };

@@ -1,28 +1,16 @@
-import { useEffect, useState } from 'react';
 import { Tabs, Redirect } from 'expo-router';
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemedText } from '@/components';
+import { useListenUserUpdate } from '@/features/auth';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
-  const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState<FirebaseAuthTypes.User | null>();
+  const { isInitializing, user } = useListenUserUpdate();
 
-  function onAuthStateChanged(user: FirebaseAuthTypes.User | null) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
-
-  useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
-  }, []);
-
-  if (initializing)
+  if (isInitializing)
     return (
       <ThemedText style={{ textAlign: 'center', paddingTop: 100 }}>
         Loading...

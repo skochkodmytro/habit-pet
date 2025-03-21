@@ -4,22 +4,23 @@ import { Colors } from '@/constants/Colors';
 
 import { ThemedText } from './ThemedText';
 
-type Tag = {
+export type Tag = {
   label: string;
-  value: string | number;
+  value: any;
 };
 
 type TagsProps = {
   tags: Tag[];
   value?: (string | number)[];
   label?: string;
+  errorMessage?: string;
   onPressTag?: (value: string | number) => void;
 };
 
-const Tags = ({ tags, value, label, onPressTag }: TagsProps) => {
+const Tags = ({ tags, value, label, errorMessage, onPressTag }: TagsProps) => {
   return (
     <View>
-      {label && <ThemedText style={styles.label}>{label}</ThemedText>}
+      {label ? <ThemedText style={styles.label}>{label}</ThemedText> : null}
 
       <View style={styles.container}>
         {tags.map((tag) => {
@@ -41,6 +42,10 @@ const Tags = ({ tags, value, label, onPressTag }: TagsProps) => {
           );
         })}
       </View>
+
+      {errorMessage ? (
+        <ThemedText style={styles.errorText}>{errorMessage}</ThemedText>
+      ) : null}
     </View>
   );
 };
@@ -74,6 +79,11 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  errorText: {
+    fontSize: 12,
+    color: '#FF4D4F',
+    marginTop: 4,
   },
 });
 

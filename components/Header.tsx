@@ -24,13 +24,13 @@ const Header = ({
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}>
       <View style={styles.headerLeftBlock}>
-        {router.canGoBack() && enableGoBack && (
+        {router.canGoBack() && enableGoBack ? (
           <TouchableOpacity hitSlop={12} onPress={router.back}>
             <Entypo name="chevron-left" size={30} color="black" />
           </TouchableOpacity>
-        )}
+        ) : null}
 
-        {title && <ThemedText type="subtitle">{title}</ThemedText>}
+        {title ? <ThemedText type="subtitle">{title}</ThemedText> : null}
       </View>
 
       {renderRightBlock}
@@ -41,9 +41,13 @@ const Header = ({
 const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 12,
+    paddingBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+    borderBottomWidth: 0.5,
+    borderColor: '#D3D3D3',
+    backgroundColor: 'white',
   },
   headerLeftBlock: {
     flex: 1,

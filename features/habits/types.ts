@@ -10,9 +10,12 @@ export enum DaysEnum {
 
 export type Habit = {
   uid: string;
+  userUid: string;
   name: string;
   description?: string;
   repeatDays: DaysEnum[];
 };
 
-export type CreateHabitRequestDto = Omit<Habit, 'uid'>;
+export type CreateOrUpdateHabitRequestDto = Omit<Habit, 'uid' | 'userUid'> & {
+  uid?: string | null;
+};
