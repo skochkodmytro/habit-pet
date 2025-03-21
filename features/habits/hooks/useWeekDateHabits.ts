@@ -41,7 +41,7 @@ const useWeekDateHabits = (days: DaysEnum[]) => {
       .finally(finishLoading);
   };
 
-  return { isLoading, habits };
+  return { isLoading, habits, refetch: fetchHabits };
 };
 
 export default useWeekDateHabits;

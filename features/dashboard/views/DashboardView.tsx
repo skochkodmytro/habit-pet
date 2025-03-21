@@ -1,52 +1,72 @@
-// import { useMemo } from 'react';
-import { View } from 'react-native';
+import { useMemo } from 'react';
+import { RefreshControl, View, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-// import { SwipeListView } from 'react-native-swipe-list-view';
 
 import { Button, ThemedText } from '@/components';
 import { useLogout } from '@/features/auth';
-// import { useWeekDateHabits } from '@/features/habits';
-// import { DaysEnum } from '@/features/habits/types';
+import { Colors } from '@/constants/Colors';
+
+import { HabitLogsList } from '../components';
+import { useTodayHabitsLogs } from '../hooks';
 
 const DashboardView = () => {
-  const logout = useLogout();
   const insets = useSafeAreaInsets();
+  const logout = useLogout();
 
-  // const day = useMemo(() => {
-  //   return [DaysEnum.Wednesday];
-  // }, []);
+  const {
+    habitsWithLogs,
+    isLoading,
+    processingIds,
+    createHabitLog,
+    removeHabitLog,
+    refetch,
+  } = useTodayHabitsLogs();
 
-  // const { habits } = useWeekDateHabits(day);
+  const title = useMemo(() => {
+    let welcomeComeTitle = 'Welcome back, ';
+    const leftTasksCount = habitsWithLogs.filter((habit) => !habit.log).length;
+
+    if (leftTasksCount) {
+      welcomeComeTitle += `left ${leftTasksCount} task to do`;
+    } else {
+      welcomeComeTitle += `you have done all task for today!`;
+    }
+
+    return welcomeComeTitle;
+  }, [habitsWithLogs]);
 
   return (
-    <View style={{ paddingTop: insets.top, paddingHorizontal: 12 }}>
-      <ThemedText type="title">Welcome back</ThemedText>
-      <Button onPress={logout}>Log Out</Button>
+    <View style={[styles.screen, { paddingTop: insets.top }]}>
+      <View style={styles.header}>
+        <ThemedText type="title">{title}</ThemedText>
+        <Button onPress={logout}>Log Out</Button>
+      </View>
 
-      {/* <SwipeListView
-        data={['first', 'second', 'third']}
-        renderItem={(data) => (
-          <View
-            style={{
-              height: 40,
-              justifyContent: 'center',
-              backgroundColor: 'red',
-              marginBottom: 20,
-            }}
-          >
-            <ThemedText>I am {data.item} in a SwipeListView</ThemedText>
-          </View>
-        )}
-        renderHiddenItem={(data, rowMap) => (
-          <View style={{ backgroundColor: 'blue', height: 40 }}>
-            <ThemedText>Left</ThemedText>
-          </View>
-        )}
-        leftOpenValue={75}
-        rightOpenValue={-25}
-      /> */}
+      <HabitLogsList
+        data={habitsWithLogs}
+        processingIds={processingIds}
+        onCreateLog={createHabitLog}
+        onDeleteLog={removeHabitLog}
+        refreshControl={
+          <RefreshControl
+            refreshing={isLoading}
+            tintColor={Colors.dark.primary}
+            onRefresh={refetch}
+          />
+        }
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
+  header: {
+    paddingHorizontal: 12,
+    gap: 10,
+  },
+});
 
 export default DashboardView;

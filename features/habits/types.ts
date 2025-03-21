@@ -1,3 +1,5 @@
+import { FieldValue } from '@react-native-firebase/firestore';
+
 export enum DaysEnum {
   Monday = 'M',
   Tuesday = 'Tu',
@@ -14,8 +16,13 @@ export type Habit = {
   name: string;
   description?: string;
   repeatDays: DaysEnum[];
+  createdAt: FieldValue;
+  updatedAt: FieldValue;
 };
 
-export type CreateOrUpdateHabitRequestDto = Omit<Habit, 'uid' | 'userUid'> & {
+export type CreateOrUpdateHabitRequestDto = Omit<
+  Habit,
+  'uid' | 'userUid' | 'createdAt' | 'updatedAt'
+> & {
   uid?: string | null;
 };
