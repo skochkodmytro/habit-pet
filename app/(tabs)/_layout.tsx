@@ -1,13 +1,14 @@
 import { Tabs, Redirect } from 'expo-router';
 
+import Feather from '@expo/vector-icons/Feather';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AntDesign from '@expo/vector-icons/AntDesign';
+
 import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { ThemedText } from '@/components';
 import { useListenUserUpdate } from '@/features/auth';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   const { isInitializing, user } = useListenUserUpdate();
 
   if (isInitializing)
@@ -22,7 +23,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors.dark.primary,
         headerShown: false,
         // tabBarButton: HapticTab,
         // tabBarBackground: TabBarBackground,
@@ -32,18 +33,36 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          // tabBarIcon: ({ color }) => (
-          //   <IconSymbol size={28} name="house.fill" color={color} />
-          // ),
+          tabBarIcon: ({ color }) => (
+            <Feather name="home" size={24} color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="habits"
         options={{
           title: 'Habits',
-          // tabBarIcon: ({ color }) => (
-          //   <IconSymbol size={28} name="paperplane.fill" color={color} />
-          // ),
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="timeline" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="statistic"
+        options={{
+          title: 'Statistic',
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="barschart" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="user" size={24} color={color} />
+          ),
         }}
       />
     </Tabs>

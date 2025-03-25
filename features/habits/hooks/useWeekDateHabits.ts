@@ -29,6 +29,7 @@ const useWeekDateHabits = (days: DaysEnum[]) => {
       .orderBy('createdAt', 'desc')
       .where('userUid', '==', user?.uid)
       .where('repeatDays', 'array-contains-any', days)
+      .where('isDeleted', '==', false)
       .get()
       .then((snapshot) => {
         const habitsData = snapshot.docs.map((doc) => ({
@@ -37,6 +38,9 @@ const useWeekDateHabits = (days: DaysEnum[]) => {
         })) as Habit[];
 
         setHabits(habitsData);
+      })
+      .catch((e) => {
+        console.log(e, '--ee week date');
       })
       .finally(finishLoading);
   };

@@ -35,7 +35,8 @@ const useHabitList = () => {
 
     let query = habitCollection
       .orderBy('createdAt', 'desc')
-      .where('userUid', '==', user?.uid);
+      .where('userUid', '==', user?.uid)
+      .where('isDeleted', '==', false);
 
     if (lastDocument) {
       query = query.startAfter(lastDocument);
@@ -56,6 +57,9 @@ const useHabitList = () => {
         ]);
 
         if (querySnapshot.docs.length < TAKE) setIsFetchedAll(true);
+      })
+      .catch((e) => {
+        console.log(e, '--ee');
       })
       .finally(() => setIsLoading(false));
   };
