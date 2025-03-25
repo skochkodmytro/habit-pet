@@ -2,8 +2,7 @@ import { useMemo } from 'react';
 import { RefreshControl, View, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Button, ThemedText } from '@/components';
-import { useLogout } from '@/features/auth';
+import { ThemedText } from '@/components';
 import { Colors } from '@/constants/Colors';
 
 import { HabitLogsList } from '../components';
@@ -11,7 +10,6 @@ import { useTodayHabitsLogs } from '../hooks';
 
 const DashboardView = () => {
   const insets = useSafeAreaInsets();
-  const logout = useLogout();
 
   const {
     habitsWithLogs,
@@ -39,7 +37,6 @@ const DashboardView = () => {
     <View style={[styles.screen, { paddingTop: insets.top }]}>
       <View style={styles.header}>
         <ThemedText type="title">{title}</ThemedText>
-        <Button onPress={logout}>Log Out</Button>
       </View>
 
       <HabitLogsList

@@ -15,8 +15,12 @@ import { HabitWithLog } from '../types';
 type HabitLogsListProps = Omit<FlatListProps<HabitWithLog>, 'renderItem'> & {
   data: HabitWithLog[];
   processingIds?: string[];
-  onCreateLog: (habitUid: string) => Promise<unknown>;
-  onDeleteLog: (logUid: string) => Promise<unknown>;
+  disableRightSwipe?: boolean;
+  disableLeftSwipe?: boolean;
+  closeOnRowBeginSwipe?: boolean;
+  closeOnRowPress?: boolean;
+  onCreateLog?: (habitUid: string) => Promise<unknown>;
+  onDeleteLog?: (logUid: string) => Promise<unknown>;
 };
 
 const HabitLogsList: React.FC<HabitLogsListProps> = ({
@@ -32,9 +36,9 @@ const HabitLogsList: React.FC<HabitLogsListProps> = ({
     (habit: HabitWithLog) => async () => {
       try {
         if (!habit.log) {
-          await onCreateLog(habit.uid);
+          if (onCreateLog) await onCreateLog(habit.uid);
         } else {
-          await onDeleteLog(habit.log.uid);
+          if (onDeleteLog) await onDeleteLog(habit.log.uid);
         }
       } catch (e) {
         console.log(e);

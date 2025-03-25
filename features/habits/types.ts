@@ -18,11 +18,13 @@ export type Habit = {
   repeatDays: DaysEnum[];
   createdAt: FieldValue;
   updatedAt: FieldValue;
+  isDeleted?: boolean;
+  deletedAt?: FieldValue | null;
 };
 
 export type CreateOrUpdateHabitRequestDto = Omit<
   Habit,
-  'uid' | 'userUid' | 'createdAt' | 'updatedAt'
+  'uid' | 'userUid' | 'createdAt' | 'updatedAt' | 'isDeleted' | 'deletedAt'
 > & {
   uid?: string | null;
 };

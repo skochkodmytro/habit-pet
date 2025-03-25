@@ -30,6 +30,8 @@ const useCreateOrUpdateHabit = () => {
         .add({
           ...rest,
           userUid: user?.uid,
+          isDeleted: false,
+          deletedAt: null,
           createdAt: firestore.FieldValue.serverTimestamp(),
           updatedAt: firestore.FieldValue.serverTimestamp(),
         })

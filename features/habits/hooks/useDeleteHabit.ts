@@ -10,7 +10,10 @@ const useDeleteHabit = () => {
   return (habitUid: string) => {
     habitCollection
       .doc(habitUid)
-      .delete()
+      .update({
+        isDeleted: true,
+        deletedAt: firestore.FieldValue.serverTimestamp(),
+      })
       .then(() => {
         setHabits(habits.filter((habit) => habit.uid !== habitUid));
       });
