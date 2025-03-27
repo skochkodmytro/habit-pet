@@ -11,12 +11,14 @@ type HeaderProps = {
   title?: string;
   renderRightBlock?: ReactNode;
   enableGoBack?: boolean;
+  onGoBack?: () => void;
 };
 
 const Header = ({
   title,
   renderRightBlock,
   enableGoBack = true,
+  onGoBack,
 }: HeaderProps) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
@@ -24,8 +26,11 @@ const Header = ({
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}>
       <View style={styles.headerLeftBlock}>
-        {router.canGoBack() && enableGoBack ? (
-          <TouchableOpacity hitSlop={12} onPress={router.back}>
+        {(router.canGoBack() && enableGoBack) || !!onGoBack ? (
+          <TouchableOpacity
+            hitSlop={12}
+            onPress={!!onGoBack ? onGoBack : router.back}
+          >
             <Entypo name="chevron-left" size={30} color="black" />
           </TouchableOpacity>
         ) : null}

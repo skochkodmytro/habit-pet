@@ -1155,6 +1155,9 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXConstants (17.0.8):
     - ExpoModulesCore
+  - EXImageLoader (5.0.0):
+    - ExpoModulesCore
+    - React-Core
   - EXJSONUtils (0.14.0)
   - EXManifests (0.15.7):
     - ExpoModulesCore
@@ -1370,7 +1373,11 @@ PODS:
     - Yoga
   - ExpoAsset (11.0.4):
     - ExpoModulesCore
+  - ExpoAudio (0.3.5):
+    - ExpoModulesCore
   - ExpoBlur (14.0.3):
+    - ExpoModulesCore
+  - ExpoDocumentPicker (13.0.3):
     - ExpoModulesCore
   - ExpoFileSystem (18.0.11):
     - ExpoModulesCore
@@ -1380,10 +1387,17 @@ PODS:
     - ExpoModulesCore
   - ExpoHead (4.0.19):
     - ExpoModulesCore
+  - ExpoImageManipulator (13.0.6):
+    - EXImageLoader
+    - ExpoModulesCore
+    - SDWebImageWebPCoder
   - ExpoKeepAwake (14.0.3):
     - ExpoModulesCore
   - ExpoLinking (7.0.5):
     - ExpoModulesCore
+  - ExpoMediaLibrary (17.0.6):
+    - ExpoModulesCore
+    - React-Core
   - ExpoModulesCore (2.2.3):
     - DoubleConversion
     - glog
@@ -1412,6 +1426,8 @@ PODS:
   - ExpoSymbols (0.2.2):
     - ExpoModulesCore
   - ExpoSystemUI (4.0.8):
+    - ExpoModulesCore
+  - ExpoVideo (2.0.6):
     - ExpoModulesCore
   - ExpoWebBrowser (14.0.2):
     - ExpoModulesCore
@@ -1584,6 +1600,18 @@ PODS:
     - hermes-engine/Pre-built (= 0.76.7)
   - hermes-engine/Pre-built (0.76.7)
   - leveldb-library (1.22.6)
+  - libwebp (1.5.0):
+    - libwebp/demux (= 1.5.0)
+    - libwebp/mux (= 1.5.0)
+    - libwebp/sharpyuv (= 1.5.0)
+    - libwebp/webp (= 1.5.0)
+  - libwebp/demux (1.5.0):
+    - libwebp/webp
+  - libwebp/mux (1.5.0):
+    - libwebp/demux
+  - libwebp/sharpyuv (1.5.0)
+  - libwebp/webp (1.5.0):
+    - libwebp/sharpyuv
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
     - nanopb/encode (= 3.30910.0)
@@ -2824,6 +2852,69 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-blob-util (0.21.2):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-keyboard-controller (1.16.8):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - react-native-pdf (6.7.7):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-safe-area-context (4.12.0):
     - DoubleConversion
     - glog
@@ -3343,6 +3434,10 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - SDWebImage/Core (5.21.0)
+  - SDWebImageWebPCoder (0.14.6):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.17)
   - SocketRocket (0.7.1)
   - Yoga (0.0.0)
 
@@ -3350,6 +3445,7 @@ DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
   - EXJSONUtils (from `../node_modules/expo-json-utils/ios`)
   - EXManifests (from `../node_modules/expo-manifests/ios`)
   - Expo (from `../node_modules/expo`)
@@ -3358,17 +3454,22 @@ DEPENDENCIES:
   - expo-dev-menu (from `../node_modules/expo-dev-menu`)
   - expo-dev-menu-interface (from `../node_modules/expo-dev-menu-interface/ios`)
   - ExpoAsset (from `../node_modules/expo-asset/ios`)
+  - ExpoAudio (from `../node_modules/expo-audio/ios`)
   - ExpoBlur (from `../node_modules/expo-blur/ios`)
+  - ExpoDocumentPicker (from `../node_modules/expo-document-picker/ios`)
   - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../node_modules/expo-font/ios`)
   - ExpoHaptics (from `../node_modules/expo-haptics/ios`)
   - ExpoHead (from `../node_modules/expo-router/ios`)
+  - ExpoImageManipulator (from `../node_modules/expo-image-manipulator/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoLinking (from `../node_modules/expo-linking/ios`)
+  - ExpoMediaLibrary (from `../node_modules/expo-media-library/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - ExpoSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - ExpoSymbols (from `../node_modules/expo-symbols/ios`)
   - ExpoSystemUI (from `../node_modules/expo-system-ui/ios`)
+  - ExpoVideo (from `../node_modules/expo-video/ios`)
   - ExpoWebBrowser (from `../node_modules/expo-web-browser/ios`)
   - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -3406,6 +3507,9 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
+  - react-native-blob-util (from `../node_modules/react-native-blob-util`)
+  - react-native-keyboard-controller (from `../node_modules/react-native-keyboard-controller`)
+  - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
@@ -3462,8 +3566,11 @@ SPEC REPOS:
     - gRPC-Core
     - GTMSessionFetcher
     - leveldb-library
+    - libwebp
     - nanopb
     - RecaptchaInterop
+    - SDWebImage
+    - SDWebImageWebPCoder
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -3473,6 +3580,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+  EXImageLoader:
+    :path: "../node_modules/expo-image-loader/ios"
   EXJSONUtils:
     :path: "../node_modules/expo-json-utils/ios"
   EXManifests:
@@ -3489,8 +3598,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-dev-menu-interface/ios"
   ExpoAsset:
     :path: "../node_modules/expo-asset/ios"
+  ExpoAudio:
+    :path: "../node_modules/expo-audio/ios"
   ExpoBlur:
     :path: "../node_modules/expo-blur/ios"
+  ExpoDocumentPicker:
+    :path: "../node_modules/expo-document-picker/ios"
   ExpoFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   ExpoFont:
@@ -3499,10 +3612,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-haptics/ios"
   ExpoHead:
     :path: "../node_modules/expo-router/ios"
+  ExpoImageManipulator:
+    :path: "../node_modules/expo-image-manipulator/ios"
   ExpoKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
   ExpoLinking:
     :path: "../node_modules/expo-linking/ios"
+  ExpoMediaLibrary:
+    :path: "../node_modules/expo-media-library/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core"
   ExpoSplashScreen:
@@ -3511,6 +3628,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-symbols/ios"
   ExpoSystemUI:
     :path: "../node_modules/expo-system-ui/ios"
+  ExpoVideo:
+    :path: "../node_modules/expo-video/ios"
   ExpoWebBrowser:
     :path: "../node_modules/expo-web-browser/ios"
   EXUpdatesInterface:
@@ -3582,6 +3701,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
+  react-native-blob-util:
+    :path: "../node_modules/react-native-blob-util"
+  react-native-keyboard-controller:
+    :path: "../node_modules/react-native-keyboard-controller"
+  react-native-pdf:
+    :path: "../node_modules/react-native-pdf"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-webview:
@@ -3661,6 +3786,7 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: ca6a8e5d04812fce8ffd6437810c2d46f925eaeb
   DoubleConversion: f16ae600a246532c4020132d54af21d0ddb2a385
   EXConstants: a1f35b9aabbb3c6791f8e67722579b1ffcdd3f18
+  EXImageLoader: 759063a65ab016b836f73972d3bb25404888713d
   EXJSONUtils: 01fc7492b66c234e395dcffdd5f53439c5c29c93
   EXManifests: 4e8c6aa537f44e72c2b4e2b71698234b623007da
   Expo: d01030025d6965c98bd968ea9b71ae5bb9727cb8
@@ -3669,17 +3795,22 @@ SPEC CHECKSUMS:
   expo-dev-menu: d7df3531103e0a7927f62709037fdd0d3b25012c
   expo-dev-menu-interface: 00dc42302a72722fdecec3fa048de84a9133bcc4
   ExpoAsset: a4cbc27a7cd24a6e87eb719603790b2cfa8dd326
+  ExpoAudio: 59cfca1241442cd5f4bdc9ab1026f0452849fab0
   ExpoBlur: 567af66164e3043a9a30069594aed1ddf0a88d97
+  ExpoDocumentPicker: 8c1f88c2809ab2287350e8fac65964bf423578be
   ExpoFileSystem: 4d2e7f77a41cfde8c3ae98580d872cd49437f993
   ExpoFont: 773955186469acc5108ff569712a2d243857475f
   ExpoHaptics: e01cce0741d68c281853118eb0267f88d42c6b7a
   ExpoHead: 266288a26bf2d6bc04909b5180d7478d2237f8ab
+  ExpoImageManipulator: 43c7bb3ecccbe993054d2e9131c8dcbe54f1385b
   ExpoKeepAwake: 2a5f15dd4964cba8002c9a36676319a3394c85c7
   ExpoLinking: 0381341519ca7180a3a057d20edb1cf6a908aaf4
+  ExpoMediaLibrary: e76bf16d148184fc32f6302445d5d11e72ab47f5
   ExpoModulesCore: 9566a9ca8f0882e12a7c24d43309773df80653b6
   ExpoSplashScreen: 643666b96a84e8d97d55fac43926fb4183c692d9
   ExpoSymbols: b9f255ce49868d46a73f30e12859efeb8117bcad
   ExpoSystemUI: ba4507df7d8d15f5e1694a3c7fc6bc3cca3803e5
+  ExpoVideo: 775d29cbaf4affbee0a449770a476ce4ab69ca8c
   ExpoWebBrowser: 6890a769e6c9d83da938dceb9a03e764afc3ec9c
   EXUpdatesInterface: 1dcebac98ac5dad4289e6ff2bd5616822e894397
   FBLazyVector: ca8044c9df513671c85167838b4188791b6f37e1
@@ -3701,6 +3832,7 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 75b671f9e551e4c49153d4c4f8659ef4f559b970
   hermes-engine: eb4a80f6bf578536c58a44198ec93a30f6e69218
   leveldb-library: cc8b8f8e013647a295ad3f8cd2ddf49a6f19be19
+  libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   RCT-Folly: bf5c0376ffe4dd2cf438dcf86db385df9fdce648
   RCTDeprecation: 7691283dd69fed46f6653d376de6fa83aaad774c
@@ -3731,6 +3863,9 @@ SPEC CHECKSUMS:
   React-logger: f9d104eace4ce03d7d5ab96802069d9905082225
   React-Mapbuffer: 33ee28be239923f0e1db4650f859380c5640562c
   React-microtasksnativemodule: bfacefa4aa4e3f9264d274012de38b314414bf11
+  react-native-blob-util: d18fc3acedec6309daaef6166c3dfa208ae32b26
+  react-native-keyboard-controller: ad30e18a48df402fe60826432ee285d2de49350f
+  react-native-pdf: 5d85253646c36b0fda050ec5226654f0f2f31a25
   react-native-safe-area-context: 908ee3cf872b29ed987a0514f1a6ccbf57f0fef4
   react-native-webview: 47c9d892756ec3930810f2b539e732c01858e1c9
   React-nativeconfig: c77447a7820ac780b97f121ae6248ac07248835f
@@ -3767,6 +3902,8 @@ SPEC CHECKSUMS:
   RNGestureHandler: 598e45cedb905b157e9764acbef0b5e365693451
   RNReanimated: ddc60075b382b872662cadaf9972b07d52a8fce7
   RNScreens: 8ae716a7e26b9ecee7f2856e6ff47b8e7e253ee8
+  SDWebImage: f84b0feeb08d2d11e6a9b843cb06d75ebf5b8868
+  SDWebImageWebPCoder: e38c0a70396191361d60c092933e22c20d5b1380
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: d213adae4f2c5518e9b19f919afa25a73848ecfb
 

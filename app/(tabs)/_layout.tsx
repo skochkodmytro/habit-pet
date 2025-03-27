@@ -48,6 +48,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="(gallery)"
+        options={{
+          title: 'Gallery',
+          tabBarIcon: ({ color }) => (
+            <AntDesign name="pluscircleo" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="statistic"
         options={{
           title: 'Statistic',
