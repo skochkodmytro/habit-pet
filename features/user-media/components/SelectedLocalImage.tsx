@@ -1,13 +1,16 @@
 import { useMemo } from 'react';
 import { Image, View } from 'react-native';
-import { Asset } from 'expo-media-library';
 import { ImageResult } from 'expo-image-manipulator';
 import ImageZoom from 'react-native-image-pan-zoom';
+import { Asset } from 'expo-media-library';
 
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from '@/constants/Device';
+import {
+  SELECTED_ASSET_CONTAINER_HEIGHT,
+  SELECTED_ASSET_CONTAINER_WIDTH,
+} from '../constants/CreatePostLayer';
 
 type SelectedLocalImageProps = {
-  image: Asset | ImageResult;
+  image: Asset;
   onChangeImage: (image: ImageResult) => void;
 };
 
@@ -15,30 +18,19 @@ const SelectedLocalImage = ({
   image,
   onChangeImage,
 }: SelectedLocalImageProps) => {
-  // const context = useImageManipulator(image.uri);
-
-  // const rotate90andFlip = async () => {
-  //   context.rotate(90);
-  //   const image = await context.renderAsync();
-  //   const result = await image.saveAsync({
-  //     format: SaveFormat.PNG,
-  //   });
-
-  //   onChangeImage(result);
-  // };
-
   const { scaledHeight, scaledWidth } = useMemo(() => {
     const imageAspectRatio = image.width / image.height;
-    const containerAspectRatio = DEVICE_WIDTH / (DEVICE_HEIGHT / 3);
+    const containerAspectRatio =
+      SELECTED_ASSET_CONTAINER_WIDTH / SELECTED_ASSET_CONTAINER_HEIGHT;
 
     let scaledWidth, scaledHeight;
 
     if (imageAspectRatio > containerAspectRatio) {
-      scaledWidth = DEVICE_WIDTH;
-      scaledHeight = DEVICE_WIDTH / imageAspectRatio;
+      scaledWidth = SELECTED_ASSET_CONTAINER_WIDTH;
+      scaledHeight = SELECTED_ASSET_CONTAINER_WIDTH / imageAspectRatio;
     } else {
-      scaledHeight = DEVICE_HEIGHT / 3;
-      scaledWidth = (DEVICE_HEIGHT / 3) * imageAspectRatio;
+      scaledHeight = SELECTED_ASSET_CONTAINER_HEIGHT;
+      scaledWidth = SELECTED_ASSET_CONTAINER_HEIGHT * imageAspectRatio;
     }
 
     return { scaledWidth, scaledHeight };
@@ -48,8 +40,8 @@ const SelectedLocalImage = ({
     <View>
       {/* @ts-ignore */}
       <ImageZoom
-        cropWidth={DEVICE_WIDTH}
-        cropHeight={DEVICE_HEIGHT / 3}
+        cropWidth={SELECTED_ASSET_CONTAINER_WIDTH}
+        cropHeight={SELECTED_ASSET_CONTAINER_HEIGHT}
         imageWidth={scaledWidth}
         imageHeight={scaledHeight}
         minScale={1}

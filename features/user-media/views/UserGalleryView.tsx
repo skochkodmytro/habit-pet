@@ -13,20 +13,29 @@ import { useRouter } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 import { Button, Header, ThemedText } from '@/components';
 import { DEVICE_WIDTH } from '@/constants/Device';
 import { Colors } from '@/constants/Colors';
 
 import { useMediasSelector, useUserMedias } from '../hooks';
-import { SelectedLocalImage } from '../components';
+import {
+  SelectedLocalAudio,
+  SelectedLocalImage,
+  SelectedLocalPdf,
+  SelectedLocalVideo,
+} from '../components';
 import { useCreatePostStore } from '../store';
+import { CommonAsset, DocumentType } from '../types';
 
 const IMAGE_SIZE = (DEVICE_WIDTH - 8) / 3; // 8 is gap and padding horizontal
 
 const UserGalleryView = () => {
   const router = useRouter();
-  const { medias, fetchMore } = useUserMedias();
+  const { medias, pickDocument, fetchMore } = useUserMedias();
   const {
     selectedAssets,
     lastSelectedAsset,
@@ -36,18 +45,19 @@ const UserGalleryView = () => {
     toggleMultipleMode,
     setSelectedSingleAsset,
     toggleMedia,
-    // pickDocument,
-  } = useMediasSelector(medias[0]);
+  } = useMediasSelector(medias[0] as Asset);
   const { setAssets } = useCreatePostStore();
 
   const fetchMoreMedias = useCallback(() => fetchMore(), [fetchMore]);
 
   const navigateToNextStep = () => {
-    setAssets(isMultipleMode ? selectedAssets : (selectedSingleAsset as Asset));
+    setAssets(
+      isMultipleMode ? selectedAssets : (selectedSingleAsset as CommonAsset)
+    );
     router.push('/(tabs)/(gallery)/edit-selected-medias');
   };
 
-  const renderMedia: ListRenderItem<Asset> = useCallback(
+  const renderMedia: ListRenderItem<CommonAsset> = useCallback(
     ({ item }) => {
       const selectedIndex = selectedAssets.findIndex(
         (asset) => asset.id === item.id
@@ -60,7 +70,22 @@ const UserGalleryView = () => {
             isMultipleMode ? toggleMedia(item) : setSelectedSingleAsset(item)
           }
         >
-          <Image source={{ uri: item.uri }} style={styles.image} />
+          {item.mediaType === 'photo' || item.mediaType === 'video' ? (
+            <Image source={{ uri: item.uri }} style={styles.image} />
+          ) : null}
+
+          {item.mediaType === 'audio' ? (
+            <View>
+              <FontAwesome name="file-audio-o" size={24} color="black" />
+            </View>
+          ) : null}
+
+          {item.mediaType === 'pdf' ? (
+            <View>
+              <FontAwesome6 name="file-pdf" size={24} color="black" />
+            </View>
+          ) : null}
+
           {item.mediaType === 'video' ? (
             <View style={styles.videoIconWrapper}>
               <Feather name="video" size={14} color="white" />
@@ -88,7 +113,7 @@ const UserGalleryView = () => {
     );
   }, [isDisableNextStep, navigateToNextStep]);
 
-  const keyExtractor = useCallback((item: Asset) => item.id, []);
+  const keyExtractor = useCallback((item: CommonAsset) => item.id, []);
 
   return (
     <View style={styles.screen}>
@@ -98,35 +123,55 @@ const UserGalleryView = () => {
         renderRightBlock={renderNextButton}
       />
 
-      {lastSelectedAsset ? (
-        <View>
-          <SelectedLocalImage
-            image={lastSelectedAsset}
-            onChangeImage={() => {}}
-            //   onChangeImage={handleEditLastSelectedAssets}
-          />
-
-          <View style={[styles.actionsWrapper, styles.actionsLeftWrapper]}>
-            <TouchableOpacity
-              hitSlop={10}
-              style={styles.actionItem}
-              //   onPress={() => pickDocument('audio')}
-            >
-              <MaterialIcons name="audiotrack" size={18} color="white" />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.actionsWrapper}>
-            <TouchableOpacity
-              hitSlop={10}
-              style={styles.actionItem}
-              onPress={toggleMultipleMode}
-            >
-              <MaterialCommunityIcons name="layers" size={18} color="white" />
-            </TouchableOpacity>
-          </View>
-        </View>
+      {lastSelectedAsset?.mediaType === 'photo' ? (
+        <SelectedLocalImage
+          image={lastSelectedAsset as Asset}
+          onChangeImage={() => {}}
+          //   onChangeImage={handleEditLastSelectedAssets}
+        />
       ) : null}
+
+      {lastSelectedAsset?.mediaType === 'video' ? (
+        <SelectedLocalVideo video={lastSelectedAsset as Asset} />
+      ) : null}
+
+      {lastSelectedAsset?.mediaType === 'audio' ? (
+        <SelectedLocalAudio audio={lastSelectedAsset as DocumentType} />
+      ) : null}
+
+      {lastSelectedAsset?.mediaType === 'pdf' ? (
+        <SelectedLocalPdf pdfFile={lastSelectedAsset} />
+      ) : null}
+
+      <View style={{ minHeight: 35 }}>
+        <View style={[styles.actionsWrapper, styles.actionsLeftWrapper]}>
+          <TouchableOpacity
+            hitSlop={10}
+            style={styles.actionItem}
+            onPress={() => pickDocument('audio')}
+          >
+            <MaterialIcons name="audiotrack" size={18} color="white" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            hitSlop={10}
+            style={styles.actionItem}
+            onPress={() => pickDocument('pdf')}
+          >
+            <AntDesign name="pdffile1" size={18} color="white" />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.actionsWrapper}>
+          <TouchableOpacity
+            hitSlop={10}
+            style={styles.actionItem}
+            onPress={toggleMultipleMode}
+          >
+            <MaterialCommunityIcons name="layers" size={18} color="white" />
+          </TouchableOpacity>
+        </View>
+      </View>
 
       <FlatList
         data={medias}
@@ -154,6 +199,8 @@ const styles = StyleSheet.create({
   mediaContainer: {
     height: IMAGE_SIZE,
     width: IMAGE_SIZE,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   videoIconWrapper: {
     position: 'absolute',
@@ -169,6 +216,8 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     borderRadius: 8,
+    width: '100%',
+    height: '100%',
   },
   selectedBadge: {
     position: 'absolute',

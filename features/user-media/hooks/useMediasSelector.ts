@@ -3,12 +3,13 @@ import { Asset } from 'expo-media-library';
 
 import { useBoolean } from '@/hooks';
 
+import { CommonAsset } from '../types';
+
 const useMediasSelector = (initialSingleAsset: Asset | null) => {
   const isAlreadySetInitialAssetRef = useRef(false);
-  const [selectedAssets, setSelectedAssets] = useState<Asset[]>([]);
-  const [selectedSingleAsset, setSelectedSingleAsset] = useState<Asset | null>(
-    null
-  );
+  const [selectedAssets, setSelectedAssets] = useState<CommonAsset[]>([]);
+  const [selectedSingleAsset, setSelectedSingleAsset] =
+    useState<CommonAsset | null>(null);
   const { value: isMultipleMode, toggle: toggleMultipleMode } =
     useBoolean(false);
 
@@ -27,7 +28,7 @@ const useMediasSelector = (initialSingleAsset: Asset | null) => {
   }, [selectedAssets]);
 
   const toggleMedia = useCallback(
-    (media: Asset) => {
+    (media: CommonAsset) => {
       const findMediaIndex = selectedAssets.findIndex(
         (asset) => asset.id === media.id
       );

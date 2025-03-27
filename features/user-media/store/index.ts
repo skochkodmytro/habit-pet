@@ -1,9 +1,10 @@
 import { create } from 'zustand';
-import { Asset } from 'expo-media-library';
+
+import { CommonAsset } from '../types';
 
 interface CreatePostStore {
-  assets: Asset[] | Asset;
-  setAssets: (assets: Asset[] | Asset) => void;
+  assets: CommonAsset[] | CommonAsset;
+  setAssets: (assets: CommonAsset[] | CommonAsset) => void;
 }
 
 export const useCreatePostStore = create<CreatePostStore>((set) => ({

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import DraggableFlatList, {
   DragEndParams,
@@ -9,42 +9,70 @@ import { Asset } from 'expo-media-library';
 
 import { Header } from '@/components';
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from '@/constants/Device';
+import { useBoolean } from '@/hooks';
 
 import { useCreatePostStore } from '../store';
+import { VideoItemFlatList } from '../components';
 
 const EditSelectedAssetsView = () => {
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const {
+    value: isDraggable,
+    setTrue: startDraggable,
+    setFalse: finishDraggable,
+  } = useBoolean(false);
+
   const { assets } = useCreatePostStore();
   const [data, setData] = useState(assets as Asset[]);
 
   const handleDragEnd = (params: DragEndParams<Asset>) => {
     setData(params.data);
+    finishDraggable();
   };
 
-  const renderAsset: RenderItem<Asset> = useCallback(({ item, drag }) => {
-    return (
-      <ScaleDecorator activeScale={1.01}>
-        <TouchableOpacity
-          style={{
-            height: '100%',
-            width: DEVICE_WIDTH - 120,
-          }}
-          onLongPress={drag}
-        >
-          <Image
-            source={item}
+  const onViewableItemsChanged = useRef(({ viewableItems, changed }: any) => {
+    if (viewableItems.length > 0) {
+      //   console.log(viewableItems);
+      setActiveIndex(viewableItems[0].index);
+      //   console.log(viewableItems[0]);
+      //   console.log(changed);
+    }
+  }).current;
+
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 100,
+  };
+
+  const renderAsset: RenderItem<Asset> = useCallback(
+    ({ item, getIndex, drag }) => {
+      const isActive = activeIndex === getIndex();
+
+      return (
+        <ScaleDecorator activeScale={1.01}>
+          <TouchableOpacity
             style={{
               height: '100%',
-              width: '100%',
+              width: DEVICE_WIDTH - 120,
               borderRadius: 12,
-              borderWidth: 1,
-              borderColor: 'lightgray',
+              overflow: 'hidden',
             }}
-            resizeMode="cover"
-          />
-        </TouchableOpacity>
-      </ScaleDecorator>
-    );
-  }, []);
+            onLongPress={drag}
+          >
+            {item.mediaType === 'photo' ? (
+              <Image source={item} style={styles.image} resizeMode="cover" />
+            ) : null}
+            {item.mediaType === 'video' ? (
+              <VideoItemFlatList
+                video={item as Asset}
+                isActive={isActive && !isDraggable}
+              />
+            ) : null}
+          </TouchableOpacity>
+        </ScaleDecorator>
+      );
+    },
+    [activeIndex, isDraggable]
+  );
 
   const keyExtractor = (item: Asset) => item.id;
 
@@ -57,16 +85,15 @@ const EditSelectedAssetsView = () => {
           horizontal
           renderItem={renderAsset}
           keyExtractor={keyExtractor}
-          contentContainerStyle={{
-            height: DEVICE_HEIGHT / 2,
-            paddingHorizontal: 60,
-            gap: 10,
-            paddingTop: 50,
-          }}
           onDragEnd={handleDragEnd}
+          onDragBegin={startDraggable}
+          contentContainerStyle={styles.list}
           pagingEnabled
+          showsHorizontalScrollIndicator={false}
           snapToInterval={DEVICE_WIDTH - 110}
           decelerationRate="fast"
+          onViewableItemsChanged={onViewableItemsChanged}
+          viewabilityConfig={viewabilityConfig}
         />
       ) : null}
     </View>
@@ -76,6 +103,19 @@ const EditSelectedAssetsView = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+  },
+  image: {
+    height: '100%',
+    width: '100%',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'lightgray',
+  },
+  list: {
+    height: DEVICE_HEIGHT / 2,
+    paddingHorizontal: 60,
+    gap: 10,
+    paddingTop: 50,
   },
 });
 

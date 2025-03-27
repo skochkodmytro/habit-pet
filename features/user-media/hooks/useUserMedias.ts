@@ -4,11 +4,13 @@ import * as DocumentPicker from 'expo-document-picker';
 
 import { useBoolean } from '@/hooks';
 
+import { CommonAsset } from '../types';
+
 const LIMIT_COUNT = 30;
 
 const useUserMedias = () => {
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
-  const [medias, setMedias] = useState<MediaLibrary.Asset[]>([]);
+  const [medias, setMedias] = useState<CommonAsset[]>([]);
   const [afterMediaId, setAfterMediaId] = useState<string | null>(null);
   const { value: isFinishedLoad, setTrue: finishLoad } = useBoolean(false);
   const {
@@ -52,6 +54,10 @@ const useUserMedias = () => {
 
     if (assets && assets.length > 0) {
       const [asset] = assets;
+      setMedias((prev) => [
+        { ...asset, id: `${Math.random()}`, mediaType: type },
+        ...prev,
+      ]);
     }
   };
 
