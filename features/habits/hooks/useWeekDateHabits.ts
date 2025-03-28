@@ -39,9 +39,6 @@ const useWeekDateHabits = (days: DaysEnum[]) => {
 
         setHabits(habitsData);
       })
-      .catch((e) => {
-        console.log(e, '--ee week date');
-      })
       .finally(finishLoading);
   };
 

@@ -41,7 +41,7 @@ const HabitLogsList: React.FC<HabitLogsListProps> = ({
           if (onDeleteLog) await onDeleteLog(habit.log.uid);
         }
       } catch (e) {
-        console.log(e);
+        console.warn(e);
       } finally {
         listRef?.current?.closeAllOpenRows();
       }

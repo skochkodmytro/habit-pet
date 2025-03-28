@@ -3,6 +3,7 @@ import { Tabs, Redirect } from 'expo-router';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Entypo from '@expo/vector-icons/Entypo';
 
 import { Colors } from '@/constants/Colors';
 import { ThemedText } from '@/components';
@@ -53,6 +54,15 @@ export default function TabLayout() {
           title: 'Gallery',
           tabBarIcon: ({ color }) => (
             <AntDesign name="pluscircleo" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="(chat)"
+        options={{
+          title: 'Chat',
+          tabBarIcon: ({ color }) => (
+            <Entypo name="chat" size={24} color={color} />
           ),
         }}
       />

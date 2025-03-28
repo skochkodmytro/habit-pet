@@ -16,18 +16,27 @@ interface HabitsStore {
   setIsLoading: (value: boolean) => void;
   setIsFetchedAll: (value: boolean) => void;
   setLastDocument: (document: Document) => void;
+
+  reset: () => void;
 }
 
-export const useHabitsStore = create<HabitsStore>((set) => ({
+const initialStore = {
   habits: [],
+  isLoading: true,
+  isFetchedAll: false,
+  lastDocument: null,
+};
+
+export const useHabitsStore = create<HabitsStore>((set) => ({
+  ...initialStore,
+
   setHabits: (habits) => set({ habits }),
 
-  isLoading: true,
   setIsLoading: (isLoading) => set({ isLoading }),
 
-  isFetchedAll: false,
   setIsFetchedAll: (isFetchedAll) => set({ isFetchedAll }),
 
-  lastDocument: null,
   setLastDocument: (lastDocument: Document) => set({ lastDocument }),
+
+  reset: () => set(initialStore),
 }));

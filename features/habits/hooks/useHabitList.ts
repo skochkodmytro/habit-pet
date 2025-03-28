@@ -58,9 +58,6 @@ const useHabitList = () => {
 
         if (querySnapshot.docs.length < TAKE) setIsFetchedAll(true);
       })
-      .catch((e) => {
-        console.log(e, '--ee');
-      })
       .finally(() => setIsLoading(false));
   };
 

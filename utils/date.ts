@@ -20,3 +20,5 @@ export const firestoreToDayjs = (timestamp: any) => {
     timestamp._seconds * 1000 + Math.floor(timestamp._nanoseconds / 1e6);
   return dayjs(milliseconds);
 };
+
+export const dateFormat = 'DD-MM-YYYY';

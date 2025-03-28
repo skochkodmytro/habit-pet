@@ -32,10 +32,7 @@ const EditSelectedAssetsView = () => {
 
   const onViewableItemsChanged = useRef(({ viewableItems, changed }: any) => {
     if (viewableItems.length > 0) {
-      //   console.log(viewableItems);
       setActiveIndex(viewableItems[0].index);
-      //   console.log(viewableItems[0]);
-      //   console.log(changed);
     }
   }).current;
 

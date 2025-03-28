@@ -67,10 +67,7 @@ const useStatisticList = () => {
       .then(
         (snapshot) =>
           snapshot.docs.map((d) => ({ ...d.data(), uid: d.id })) as HabitLog[]
-      )
-      .catch((e) => {
-        console.log(e, '-----habits log error');
-      });
+      );
 
     const daysStatisticsArr: DayStatistics[] = dates.map((date) => {
       const dayEnum = dayjs(date).format('dddd') as keyof typeof DaysEnum;

@@ -6,5 +6,6 @@ module.exports = {
   rules: {
     'react-hooks/exhaustive-deps': 'off',
     'prettier/prettier': 'error',
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
   },
 };
