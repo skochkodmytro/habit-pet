@@ -1,0 +1,1 @@
+export { getAiAdvicesPerDay } from './getAiAdvicesPerDay';

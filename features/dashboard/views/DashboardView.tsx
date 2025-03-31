@@ -2,11 +2,12 @@ import { useMemo } from 'react';
 import { RefreshControl, View, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ThemedText } from '@/components';
+import { Button, ThemedText } from '@/components';
 import { Colors } from '@/constants/Colors';
+import { useBoolean } from '@/hooks';
 
-import { HabitLogsList } from '../components';
-import { useTodayHabitsLogs } from '../hooks';
+import { DailyPlanModal, HabitLogsList } from '../components';
+import { useDailyPlan, useTodayHabitsLogs } from '../hooks';
 
 const DashboardView = () => {
   const insets = useSafeAreaInsets();
@@ -19,6 +20,15 @@ const DashboardView = () => {
     removeHabitLog,
     refetch,
   } = useTodayHabitsLogs();
+
+  const { dailyPlanItems, isLoading: isDailyPlanLoading } =
+    useDailyPlan(habitsWithLogs);
+
+  const {
+    value: isOpenDailyPlanModal,
+    setTrue: openDailyPlanModal,
+    setFalse: closeDailyPlanModal,
+  } = useBoolean(false);
 
   const title = useMemo(() => {
     let welcomeComeTitle = 'Welcome back, ';
@@ -39,6 +49,8 @@ const DashboardView = () => {
         <ThemedText type="title">{title}</ThemedText>
       </View>
 
+      <ThemedText></ThemedText>
+
       <HabitLogsList
         data={habitsWithLogs}
         processingIds={processingIds}
@@ -52,6 +64,20 @@ const DashboardView = () => {
           />
         }
       />
+
+      {dailyPlanItems.length > 0 ? (
+        <View style={styles.buttonWrapper}>
+          <Button loading={isDailyPlanLoading} onPress={openDailyPlanModal}>
+            Show daily plans
+          </Button>
+        </View>
+      ) : null}
+
+      <DailyPlanModal
+        visible={isOpenDailyPlanModal}
+        dailyPlanItems={dailyPlanItems}
+        onClose={closeDailyPlanModal}
+      />
     </View>
   );
 };
@@ -63,6 +89,9 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: 12,
     gap: 10,
+  },
+  buttonWrapper: {
+    padding: 12,
   },
 });
 
